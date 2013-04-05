@@ -4,7 +4,7 @@ process.on('uncaughtException', function(err) {
 });
 
 var sys = require('util'),
-    rest = require('restler2');
+    rest = require('restler');
 
 //rest.post('http://localhost:3000/measure', {
 rest.post('http://rexperi-staging2.herokuapp.com/measure', {
