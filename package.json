@@ -9,6 +9,8 @@
     "express": "*",
     "jade": "*",
 	  "mocha" : "*",
-    "sinon" : "*"
+    "sinon" : "*",
+    "mongodb": "*",
+    "underscore": "*"
   }
 }

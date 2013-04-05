@@ -2,13 +2,13 @@ var assert = require("assert")
 var measure = require("../routes/measure");
 var sinon = require('sinon');
 
-var res = { json: function () {} };
-var resSpy = sinon.spy(res, "json");  
+var res = { send: function () {} };
+var model = { addMeasurements: function(entries,cb){cb();}}
+var resSpy = sinon.spy(res, "send");  
     
 describe('measure', function(){
-  it('should store given entries in the model', function(done) {
-    var model = { addMeasurement: function (entries, cb) {cb();} };
-    var modelSpy = sinon.spy(model, "addMeasurement");    
+  it('stores given entries in the model', function(done) {
+    var modelSpy = sinon.spy(model, "addMeasurements");    
     
     measure.setModel(model);
 	  measure.index({
@@ -23,14 +23,14 @@ describe('measure', function(){
           {"userId":"user123", "timeStamp":"20132203-2114", "eventId": 2}
         ]).calledOnce);
         
+        model.addMeasurements.restore();
         done();
       }
     );    
   })
   
-  it('should return 200 if succeded storing measurement', function(done) {
-    var model = { addMeasurement: function () {} };
-    var modelStub = sinon.stub(model, "addMeasurement");  
+  it('returns 200 if succeded storing measurement', function(done) {
+    var modelStub = sinon.stub(model, "addMeasurements");  
     modelStub.callsArgWith(1, null); // No error 
     
     measure.setModel(model);
@@ -42,14 +42,16 @@ describe('measure', function(){
       res,
       function() {       
         assert(resSpy.withArgs(200).calledOnce);
+        
+        model.addMeasurements.restore();
         done();
       }
     );    
   })
   
-  it('should return 401 if failed storing measurement', function(done) {
-    var model = { addMeasurement: function () {} };
-    var modelStub = sinon.stub(model, "addMeasurement");  
+  it('returns 401 if failed storing measurement', function(done) {
+
+    var modelStub = sinon.stub(model, "addMeasurements");  
     modelStub.callsArgWith(1, "An error!!");  
     
     measure.setModel(model);
@@ -61,6 +63,8 @@ describe('measure', function(){
       res,
       function() {       
         assert(resSpy.withArgs(401).calledOnce);
+        
+        model.addMeasurements.restore();
         done();
       }
     );    

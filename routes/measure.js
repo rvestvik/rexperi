@@ -1,19 +1,22 @@
 
 exports.setModel = function(model){
-  this.model = model;
+  exports.model = model;
 }
 
 exports.index = function(req, res, callback){
   var entries = JSON.parse(req.body.entries);
   for (var i=0;i<entries.length;i++) 
 		entries[i].userId = (req.body.userId);    
-  this.model.addMeasurement(entries, function(err) {
+  exports.model.addMeasurements(entries, function(err) {
     if (res != null) {    
       if (err == null)
-        res.json(200);
+        res.send(200);
       else
-        res.json(401);
+        res.send(401);
     }
-    callback();  
+    
+    // Only run callback if is not work express. Used in mocha for testing purposes.
+    if (callback.name != "callbacks") 
+      callback();  
   });
 }; 
