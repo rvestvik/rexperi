@@ -11,6 +11,7 @@
 	  "mocha" : "*",
     "sinon" : "*",
     "mongodb": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "restler": "*"
   }
 }
