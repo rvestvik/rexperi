@@ -12,6 +12,7 @@
     "sinon" : "*",
     "mongodb": "*",
     "underscore": "*",
-    "restler": "*"
+    "restler": "*",
+    "webdriverjs" : "*"
   }
 }
