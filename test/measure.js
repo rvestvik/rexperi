@@ -14,13 +14,13 @@ describe('measure', function(){
 	  measure.index({
 	    body:{ 
       userId: 'user123',
-		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2},{"timeStamp":"20132203-2114", "eventId": 2}]'
+		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2, "projectId":3},{"timeStamp":"20132203-2114", "eventId": 2, "projectId":4}]'
       }}, 
       null,
       function() {       
         assert(modelSpy.withArgs([
-          {"userId":"user123", "timeStamp":"20132203-2113", "eventId": 2},
-          {"userId":"user123", "timeStamp":"20132203-2114", "eventId": 2}
+          {"userId":"user123", "timeStamp":"20132203-2113", "eventId": 2, "projectId":3},
+          {"userId":"user123", "timeStamp":"20132203-2114", "eventId": 2, "projectId":4}
         ]).calledOnce);
         
         model.addMeasurements.restore();
@@ -37,7 +37,7 @@ describe('measure', function(){
 	  measure.index({
 	    body:{ 
       userId: 'user123',
-		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2}]'
+		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2, "projectId":4}]'
       }}, 
       res,
       function() {       
@@ -58,7 +58,7 @@ describe('measure', function(){
 	  measure.index({
 	    body:{ 
       userId: 'user123',
-		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2}]'
+		  entries:'[{"timeStamp":"20132203-2113", "eventId": 2, "projectId":4}]'
       }}, 
       res,
       function() {       

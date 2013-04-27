@@ -8,6 +8,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , measure = require('./routes/measure')
+  , overview = require('./routes/overview')
   , model = require('./lib/model');
 
 var app = express();
@@ -15,7 +16,7 @@ var app = express();
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -30,10 +31,13 @@ app.configure('development', function(){
 
 model.connect(function(){
   measure.setModel(model);
-
+  overview.setModel(model);
+  
   app.get('/', routes.index);
+  app.get('/overview', overview.index);
   app.post('/measure', measure.index);
-   
+  
+  
   http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
   });
